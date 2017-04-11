@@ -3,28 +3,32 @@ package com.study.model;
 import lombok.*;
 
 /**
- * Created by Administrator on 2017/2/17 0017.
+ * 城市实体
  */
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class User {
+public class City {
+
     /**
      * 城市编号
      */
     private Long id;
 
     /**
+     * 省份编号
+     */
+    private String provinceId;
+
+    /**
      * 城市名称
      */
-    private String userName;
+    private String cityName;
 
     /**
      * 描述
      */
     private String description;
-    private City city;
-
 }

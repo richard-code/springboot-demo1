@@ -1,27 +1,28 @@
 package com.study.controller;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.study.model.User;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import com.study.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Administrator on 2017/2/17 0017.
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 public class UserController {
     private static Map<Long, User> users = Maps.newHashMap();
 
-    @ApiOperation(value = "查询所有用户")
+    @Autowired
+    private UserService userService;
+
+    /*@ApiOperation(value = "查询所有用户")
     @GetMapping(value =  "getAll")
     public List<User> getAll(){
         return Lists.newArrayList(users.values());
@@ -33,6 +34,16 @@ public class UserController {
     public String addUser(User user){
         users.put(user.getId(), user);
         return "success";
+    }*/
+
+    @GetMapping("/findByName")
+    public User findByName(String userName){
+        return userService.findByName(userName);
+    }
+
+    @PostMapping("/saveUser")
+    public User saveUser(String userName, String cityName){
+        return userService.saveUser(userName, cityName);
     }
 
 }

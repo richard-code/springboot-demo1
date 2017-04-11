@@ -1,6 +1,6 @@
 package com.study.config.db;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import com.atomikos.jdbc.AtomikosDataSourceBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -11,10 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 
 /**
  * Created by liqing on 2017/4/6 0006.
@@ -28,28 +26,29 @@ public class MasterDataSourceConfig extends AbstractDatasourceConfig {
     static final String PACKAGE = "com.study.dao.master";
     static final String MAPPER_LOCATION = "classpath:mapper/master/*.xml";
 
-    @Value("${demo.master.datasource.url}")
+    @Value("${db.datasource.master.url}")
     private String masterJDBCUrl;
-    @Value("${demo.master.datasource.driverClassName}")
+    @Value("${db.datasource.master.driverClassName}")
     private String masterJDBCDriverClassName;
-    @Value("${demo.master.datasource.user}")
+    @Value("${db.datasource.master.user}")
     private String masterJDBCUser;
-    @Value("${demo.master.datasource.password}")
+    @Value("${db.datasource.master.password}")
     private String masterJDBCPassword;
-    @Value("${demo.master.datasource.unique-name}")
+    @Value("${db.datasource.master..uniqueName}")
     private String masterJDBCUniqueName;
 
     @Primary
     @Bean(name = "masterDataSource")
-    public DataSource masterDataSource(){
-        return getDruidDataSource(masterJDBCUrl, masterJDBCDriverClassName, masterJDBCUser, masterJDBCPassword);
+    public AtomikosDataSourceBean masterDataSource(){
+        return getDruidDataSource(masterJDBCUrl, masterJDBCDriverClassName,
+                masterJDBCUser, masterJDBCPassword, masterJDBCUniqueName);
     }
 
-    @Primary
+    /*@Primary
     @Bean(name = "masterTransactionManager")
     public DataSourceTransactionManager masterTransactionManager(){
         return new DataSourceTransactionManager(masterDataSource());
-    }
+    }*/
 
     @Primary
     @Bean(name = "masterSqlSessionFactory")

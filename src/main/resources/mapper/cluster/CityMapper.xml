@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.study.dao.cluster.CityDao">
+    <resultMap id="BaseResultMap" type="com.study.model.City">
+        <result column="id" property="id" />
+        <result column="province_id" property="provinceId" />
+        <result column="city_name" property="cityName" />
+        <result column="description" property="description" />
+    </resultMap>
+
+    <parameterMap id="City" type="com.study.model.City"/>
+
+    <sql id="Base_Column_List">
+        id, province_id, city_name, description
+    </sql>
+
+    <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from tbcity
+        where city_name = #{cityName}
+    </select>
+    
+    <insert id="saveCity">
+        INSERT INTO tbcity(province_id, city_name, description)
+        VALUES (#{provinceId}, #{cityName}, #{description})
+    </insert>
+
+</mapper>
